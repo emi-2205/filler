@@ -94,3 +94,4 @@ for c in cliente:
 #################FORNITORE
 mydb.commit()
 
+
