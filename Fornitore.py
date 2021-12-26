@@ -95,3 +95,4 @@ for c in cliente:
 mydb.commit()
 
 
+
