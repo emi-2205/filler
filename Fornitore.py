@@ -87,7 +87,7 @@ mycursor= mydb.cursor()
 for i in range(0,100):
     val = (id[i], companyNames[i], mail[i], tel[i], nazioni[i], province[i], cap[i], comuni[i], vie[i], numCivici[i])
 
-    sql = "INSERT INTO cliente (IDfornitore, IBAN, Nome, NumCivico, Via, Comune, Cap, Provincia, Via, NumCivico) " \
+    sql = "INSERT INTO cliente (IDfornitore, IBAN, Nome, NumCivico, Via, Comune, Cap, Provincia, Nazione) " \
       "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
     mycursor.execute(sql, val)
