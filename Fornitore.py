@@ -84,11 +84,11 @@ for i in range(0,100):
 
     mycursor.execute(sql, val)
 
-mycursor.execute('SELECT * FROM cliente')
+mycursor.execute('SELECT * FROM fornitore')
 
-cliente = mycursor.fetchall()
+fornitore = mycursor.fetchall()
 
-for c in cliente:
+for c in fornitore:
     print(c)
 
 #################FORNITORE
