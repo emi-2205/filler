@@ -7,9 +7,8 @@ fake_data= Faker()
 Faker.seed(0)
 
 id=[]
+iban=[]
 companyNames=[]
-mail=[]
-tel=[]
 nazioni=[]
 province=[]
 cap=[]
@@ -28,9 +27,8 @@ mydb= mysql.connector.connect(
 #Nome, Mail, Telefono, Nazione, Provincia, Cap, Comune, Via, NumCivico
 
 id=[]
+iban=[]
 companyNames=[]
-mail=[]
-tel=[]
 nazioni=[]
 province=[]
 cap=[]
@@ -54,12 +52,6 @@ while len(id)<100:
 for i in range(100):
         nomeRandom= fake_data.company()
         companyNames.append(nomeRandom)
-
-        emailRandom= fake_data.email()
-        mail.append(emailRandom)
-
-        telRandom= random.randint(3000000000, 3999999999)
-        tel.append(str(telRandom))
 
         nazioneRandom= fake_data.country()
         nazioni.append(nazioneRandom)
@@ -85,19 +77,23 @@ for i in range(100):
 mycursor= mydb.cursor()
 
 for i in range(0,100):
-    val = (id[i], companyNames[i], mail[i], tel[i], nazioni[i], province[i], cap[i], comuni[i], vie[i], numCivici[i])
+    val = (id[i], iban[i], companyNames[i], numCivici[i], vie[i], comuni[i], cap[i], province[i], nazioni[i])
 
-    sql = "INSERT INTO cliente (IDcliente, Nome, Mail, Telefono, Nazione, Provincia, Cap, Comune, Via, NumCivico) " \
-      "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO cliente (IDfornitore, IBAN, Nome, NumCivico, Via, Comune, Cap, Provincia, Nazione) " \
+      "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
     mycursor.execute(sql, val)
 
-mycursor.execute('SELECT * FROM cliente')
+mycursor.execute('SELECT * FROM fornitore')
 
-cliente = mycursor.fetchall()
+fornitore = mycursor.fetchall()
 
-for c in cliente:
+for c in fornitore:
     print(c)
 
 #################FORNITORE
 mydb.commit()
+
+
+
+
