@@ -55,4 +55,4 @@ for i in range(0,100):
 
     mycursor.execute(sql, val)
 
-mydb.commit()
+#mydb.commit()

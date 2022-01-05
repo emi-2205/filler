@@ -10,8 +10,15 @@ nomeattivita=[]
 id_dipendente_appoggio=[]
 id_prodotto_appoggio=[]
 
+mydb= mysql.connector.connect(
+    host= 'localhost',
+    user= 'root',
+    port= '3306',
+    database= 'db_fabbrica_stampi'
+)
 mycursor= mydb.cursor()
-mycursor.execute('SELECT * FROM dipendente')
+
+mycursor.execute('SELECT * FROM datilavorativi')
 dipendente = mycursor.fetchall()
 mycursor.execute('SELECT * FROM prodotto')
 prodotto = mycursor.fetchall()
@@ -27,22 +34,16 @@ for i in range(100):
     oreLavorate.append(random.randrange(1, 8))
     date = datetime.date(random.randint(2019, 2021), random.randint(1, 12), random.randint(1, 28))
     data.append(str(date))
-    nomeattivita.append(random.choice('Aggiustaggio','FresaturaCO','FresaturaSO','Progettazione','Trapano'))
-
-mydb= mysql.connector.connect(
-    host= 'localhost',
-    user= 'root',
-    port= '3306',
-    database= 'db_fabbrica_stampi'
-)
-mycursor= mydb.cursor()
+    list= ['Aggiustaggio','FresaturaCO','FresaturaSO','Progettazione','Trapano']
+    nomeattivita.append(random.choice(list))
 
 for i in range(0,100):
-    val = (idDip[i], idP[i], data[i], oreLavorate[i], nomeattivita[i])
+    #val = (idDip[i], idP[i], data[i], oreLavorate[i], 'Progettazione')
+    val = (data[i], oreLavorate[i], nomeattivita[i], idDip[i], idP[i])
 
     sql = "INSERT INTO svolgimento (Data, OreLavorate, NomeAttivita, IDdipendente, IDprodotto) " \
       "VALUES (%s, %s, %s, %s, %s)"
 
     mycursor.execute(sql, val)
 
-mydb.commit()
+#mydb.commit()
