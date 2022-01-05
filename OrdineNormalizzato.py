@@ -12,6 +12,13 @@ id_materia_prima_appoggio=[]
 id_fornitore_appoggio=[]
 id_prodotto_appoggio=[]
 
+mydb= mysql.connector.connect(
+    host= 'localhost',
+    user= 'root',
+    port= '3306',
+    database= 'db_fabbrica_stampi'
+)
+
 mycursor= mydb.cursor()
 mycursor.execute('SELECT * FROM normalizzato')
 normalizzato = mycursor.fetchall()
@@ -34,15 +41,10 @@ for i in range(100):
     quantita.append(random.randrange(1, 100))
     date = datetime.date(random.randint(2019, 2021), random.randint(1, 12), random.randint(1, 28))
     dataOrdine.append(str(date))
-    date = datetime.date(random.randint(2019, 2021), random.randint(1, 12), random.randint(1, 28))
-    dataArrivo.append(str(date))
+    delta = datetime.timedelta(days=random.randint(7, 20))
+    dataArrivo.append(str(date+delta))
 
-mydb= mysql.connector.connect(
-    host= 'localhost',
-    user= 'root',
-    port= '3306',
-    database= 'db_fabbrica_stampi'
-)
+
 mycursor= mydb.cursor()
 
 for i in range(0,100):
