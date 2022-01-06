@@ -1,14 +1,14 @@
 import random
 import mysql.connector
 import datetime
+import radar
 
+nomeattivita=[]
 idP=[]
 idDip=[]
-data=[]
+date=[]
 oreLavorate=[]
-nomeattivita=[]
-id_dipendente_appoggio=[]
-id_prodotto_appoggio=[]
+list= ['Aggiustaggio','FresaturaCO','FresaturaSO','Progettazione','Trapano']
 
 mydb= mysql.connector.connect(
     host= 'localhost',
@@ -23,27 +23,69 @@ dipendente = mycursor.fetchall()
 mycursor.execute('SELECT * FROM prodotto')
 prodotto = mycursor.fetchall()
 
-for d in dipendente:
-    id_dipendente_appoggio.append(d[0])
-for p in prodotto:
-    id_prodotto_appoggio.append(p[0])
-
-for i in range(100):
-    idDip.append(str(random.choice(id_dipendente_appoggio)))
-    idP.append(str(random.choice(id_prodotto_appoggio)))
-    oreLavorate.append(random.randrange(1, 8))
-    date = datetime.date(random.randint(2019, 2021), random.randint(1, 12), random.randint(1, 28))
-    data.append(str(date))
-    list= ['Aggiustaggio','FresaturaCO','FresaturaSO','Progettazione','Trapano']
+for i in range(4800):
     nomeattivita.append(random.choice(list))
 
-for i in range(0,100):
-    #val = (idDip[i], idP[i], data[i], oreLavorate[i], 'Progettazione')
-    val = (data[i], oreLavorate[i], nomeattivita[i], idDip[i], idP[i])
+    if nomeattivita[i]=='Progettazione':
+        random.shuffle(dipendente)
+        for d in dipendente:
+            if d[1]=="Progettazione":
+                idDip.append(d[0])
+                break
+        random.shuffle(prodotto)
+        for p in prodotto:
+            dateI = str(p[2]).split('-')
+            dateC= str(p[4]).split('-')
+            data= radar.random_datetime(
+                start=datetime.datetime(year=int(dateI[0]), month=int(dateI[1]), day=int(dateI[2])),
+                stop=datetime.datetime(year=int(dateC[0]), month=int(dateC[1]), day=int(dateC[2])))
+            data= str(data).split(' ')
+            date.append(data[0])
+            idP.append(p[0])
+            break
 
+    elif nomeattivita[i]=='FresaturaCO' or nomeattivita[i]=='FresaturaSO':
+        random.shuffle(dipendente)
+        for d in dipendente:
+            if d[1]=="Fresatura":
+                idDip.append(d[0])
+                break
+        random.shuffle(prodotto)
+        for p in prodotto:
+            dateI = str(p[2]).split('-')
+            dateC = str(p[4]).split('-')
+            data = radar.random_datetime(
+                start=datetime.datetime(year=int(dateI[0]), month=int(dateI[1]), day=int(dateI[2])),
+                stop=datetime.datetime(year=int(dateC[0]), month=int(dateC[1]), day=int(dateC[2])))
+            data = str(data).split(' ')
+            date.append(data[0])
+            idP.append(p[0])
+            break
+    else:
+        random.shuffle(dipendente)
+        for d in dipendente:
+            if d[1]=="Generale":
+                idDip.append(d[0])
+                break
+        random.shuffle(prodotto)
+        for p in prodotto:
+            dateI = str(p[2]).split('-')
+            dateC = str(p[4]).split('-')
+            data = radar.random_datetime(
+                start=datetime.datetime(year=int(dateI[0]), month=int(dateI[1]), day=int(dateI[2])),
+                stop=datetime.datetime(year=int(dateC[0]), month=int(dateC[1]), day=int(dateC[2])))
+            data = str(data).split(' ')
+            date.append(data[0])
+            idP.append(p[0])
+            break
+
+    oreLavorate.append(random.randrange(1, 8))
+
+for i in range(0,4800):
+    val = (date[i], oreLavorate[i], nomeattivita[i], idDip[i], idP[i])
     sql = "INSERT INTO svolgimento (Data, OreLavorate, NomeAttivita, IDdipendente, IDprodotto) " \
       "VALUES (%s, %s, %s, %s, %s)"
 
     mycursor.execute(sql, val)
 
-#mydb.commit()
+mydb.commit()

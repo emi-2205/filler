@@ -1,5 +1,5 @@
 import mysql.connector
-import DomRan
+import cliente
 
 mydb= mysql.connector.connect(
     host= 'localhost',

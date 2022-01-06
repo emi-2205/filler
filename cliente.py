@@ -23,7 +23,7 @@ mydb= mysql.connector.connect(
     database= 'db_fabbrica_stampi'
 )
 
-while len(id)<100:
+while len(id)<20:
     flag=0
     idRandom= random.randint(10000000000, 99999999999)
     for j in id:
@@ -32,7 +32,7 @@ while len(id)<100:
     if flag==0:
         id.append(str(idRandom))
 
-for i in range(100):
+for i in range(20):
         companyNames.append(fake_data.company())
         mail.append(fake_data.email())
         tel.append(str(random.randint(3000000000, 3999999999)))
@@ -45,7 +45,7 @@ for i in range(100):
 
 mycursor= mydb.cursor()
 
-for i in range(0,100):
+for i in range(0,20):
     val = (id[i], companyNames[i], mail[i], tel[i], nazioni[i], province[i], cap[i], comuni[i], vie[i], numCivici[i])
 
     sql = "INSERT INTO cliente (IDcliente, Nome, Mail, Telefono, Nazione, Provincia, Cap, Comune, Via, NumCivico) " \
@@ -53,6 +53,5 @@ for i in range(0,100):
 
     mycursor.execute(sql, val)
 
-mycursor.execute('SELECT * FROM cliente')
 
 mydb.commit()

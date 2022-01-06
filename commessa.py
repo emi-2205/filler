@@ -26,15 +26,15 @@ for c in cliente:
     id_clienti_appoggio.append(c[0])
 
 var= 0
-for i in range(100):
+for i in range(50):
     var+=1
     id.append(var)
 
-for i in range(100):
+for i in range(50):
     id_clienti.append(random.choice(id_clienti_appoggio))
     dateOrdine.append(str(datetime.date(random.randint(2019, 2021), random.randint(1, 12), random.randint(1, 28))))
 
-for i in range(0,100):
+for i in range(0,50):
     val = (id[i], dateOrdine[i], id_clienti[i])
 
     sql = "INSERT INTO commessa (IDcommessa, DataOrdine, IDcliente) " \
@@ -45,7 +45,4 @@ for i in range(0,100):
 mycursor.execute('SELECT * FROM commessa')
 commessa = mycursor.fetchall()
 
-for c in commessa:
-    print(c)
-
-#mydb.commit()
+mydb.commit()

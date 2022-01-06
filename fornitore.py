@@ -15,7 +15,7 @@ cap=[]
 province=[]
 nazioni=[]
 
-while len(id)<100:
+while len(id)<10:
     flag=0
     idRandom= random.randint(10000000000, 99999999999)
     for j in id:
@@ -24,7 +24,7 @@ while len(id)<100:
     if flag==0:
         id.append(str(idRandom))
 
-for i in range(100):
+for i in range(10):
     iban.append(fake_data.iban())
     companyNames.append(fake_data.company())
     numCivici.append(str(fake_data.building_number()))
@@ -42,7 +42,7 @@ mydb= mysql.connector.connect(
 )
 mycursor= mydb.cursor()
 
-for i in range(0,100):
+for i in range(0,10):
     val = (id[i], iban[i], companyNames[i], numCivici[i], vie[i], comuni[i], cap[i], province[i], nazioni[i])
 
     sql = "INSERT INTO fornitore (IDfornitore, IBAN, Nome, NumCivico, Via, Comune, Cap, Provincia, Nazione) " \
@@ -53,9 +53,7 @@ for i in range(0,100):
 mycursor.execute('SELECT * FROM fornitore')
 
 fornitore = mycursor.fetchall()
-#
-for c in fornitore:
-    print(c)
+
 mydb.commit()
 
 
